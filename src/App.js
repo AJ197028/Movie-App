@@ -14,7 +14,7 @@ function App() {
     try {
       const response = await fetch("https://swapi.dev/api/films/");
       if (!response.ok) {
-        throw new Error("Something went wrong !");
+        throw new Error("Something went wrong ...Retrying");
       }
       const data = await response.json();
 
@@ -27,6 +27,7 @@ function App() {
         };
       });
       setMovies(transformedMovies);
+      setTimeout(fetchMovieHandler, 5000);
     } 
     catch (error) {
       setError(error.message);
@@ -44,10 +45,12 @@ function App() {
     content = <p>{error}</p>;
   }
 
+  
   return (
     <React.Fragment>
       <section>
         <button onClick={fetchMovieHandler}>Fetch Movies</button>
+        <button>Cancel</button>
       </section>
       <section>{content}</section>
     </React.Fragment>
